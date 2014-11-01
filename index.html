@@ -4,23 +4,65 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
   </head>
+  <style>
+    h2 {
+      color : #66757F;
+      font-family: Helvetica;
+      font-size: 22px;
+      font-weight: 300;
+      text-rendering: optimizelegibility;
+    }
+
+    .content {
+      color : #292F33;
+      font-family: Helvetica;
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    img {
+      width: 22px;
+      height: 22px;
+    }
+
+  </style>
   <body>
+    <div class = "home">
+      <h2><img src = "img/logo.png">Hack Reactor Baloney Tweets</h2>
+      <div class = "content"></div>
+    </div>
     <script>
 
       $(document).ready(function(){
         var $body = $('body');
-        $body.html('');
+        var $content = $('.content');
+        var currentdate = new Date();
 
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message);
-          $tweet.appendTo($body);
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + ' , created at ' + tweet["created_at"]);
+          $tweet.appendTo($content);
           index -= 1;
         }
+//This implementation prepends a new tweet to the content div periodically 
+        var addNewTweet = function (){
+          var index = 0;
+          var tweet = randomElement(streams.home);
+          var $tweet = $('<div></div>');
+          $tweet.text('@' + tweet.user + ': ' + tweet.message + ' , created at ' + tweet["created_at"]);
+          $tweet.prependTo($content);
+        }
+
+        setInterval(function(){
+          addNewTweet();
+        }, 3000)
+
+
 
       });
+
 
     </script>
   </body>
