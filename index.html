@@ -18,17 +18,12 @@
       text-rendering: optimizelegibility;
       background-color: white;
       text-align: center;
-      width: 588px;
-      margin-right: auto;
-      margin-left: auto;
-      margin-bottom: auto;
+      width: 100%;
       border-bottom-color: #E1E8ED;
       border-bottom-style: solid;
       border-bottom-width: 1px;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
-      padding-top: 20px;
       padding-bottom: 20px;
+      margin-bottom: 0px;
 
     }
 
@@ -37,16 +32,27 @@
       height: 22px;
     }
 
+    p {
+      color : #66757F;
+      font-family: Helvetica;
+      font-size: 15px;
+      font-weight: 300;
+      text-rendering: optimizelegibility;
+      background-color: white;
+      height: 30px;
+      margin: 0px;
+    }
+
     .content {
+      width: 75%;
+      float: right;
       color : #292F33;
       font-family: Helvetica;
       font-size: 14px;
       line-height: 18px;
       background-color: white;
-      width: 588px;
-      margin-right: auto;
-      margin-left: auto;
-
+      height: 600px;
+      overflow: scroll;
     }
 
     .tweet {
@@ -57,20 +63,26 @@
     }
 
     .user-header {
+      width: 23%;
+      float: left;
+      height: 100%;
+      display: block;
       color : #292F33;
       font-family: Helvetica;
       font-size: 14px;
       line-height: 18px;
       background-color: white;
-      width: 588px;
-      margin-right: auto;
-      margin-left: auto;
-      border-bottom-color: #E1E8ED;
-      border-bottom-style: solid;
-      border-bottom-width: 1px;
       padding-top: 5px;
       padding-bottom: 5px;
-      text-align: center;
+      padding-left: 2%;
+    }
+
+    #main {
+      overflow: hidden;
+      background-color: white;
+      max-width: 600px;
+      max-height: 750px;
+      margin: 10px auto 0;
     }
 
   </style>
@@ -81,6 +93,7 @@
         <h2><img src = "img/logo.png">Hack Reactor's Baloney Tweets</h2>
       </div>
       <div class = "user-header">
+          <p>users</p>
           <a href="shawndrost.html">@shawndrost</a><br>
           <a href="douglascalhoun.html">@douglascalhoun</a><br>
           <a href="sharksforcheap.html">@sharksforcheap</a><br>
@@ -94,13 +107,13 @@
       $(document).ready(function(){
         var $body = $('body');
         var $content = $('.content');
-        var currentdate = new Date();
 
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div class="tweet"></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + ', created at ' + tweet["created_at"]);
+          var newHtml = "<a href=\"" + tweet.user + ".html\">@" + tweet.user + "</a>" + ': ' + tweet.message + ', created at ' + tweet.created_at;
+          $tweet.html(newHtml);
           $tweet.appendTo($content);
           index -= 1;
         }
@@ -109,7 +122,8 @@
           var index = 0;
           var tweet = randomElement(streams.home);
           var $tweet = $('<div class="tweet"></div>');
-          $tweet.text('@' + tweet.user + ': ' + tweet.message + ', created at ' + tweet["created_at"]);
+          var newHtml = "<a href=\"" + tweet.user + ".html\">@" + tweet.user + "</a>" + ': ' + tweet.message + ', created at ' + tweet.created_at;
+          $tweet.html(newHtml); 
           $tweet.prependTo($content);
         }
 
