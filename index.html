@@ -109,27 +109,28 @@
         jQuery("abbr.timeago").timeago();
         var $body = $('body');
         var $content = $('.content');
-        
-        var refreshTimestamps = function(){
-          //return "<span class='timeago' title='" + now + "'>" + jQuery.timeago(now) + "</span>"
-          return jQuery.timeago(now);
+        var now = new Date();
+
+        var refreshTimestamps = function(rel){
+          return jQuery.timeago(rel);
         }
 
         var index = streams.home.length - 1;
         while(index >= 0){
           var tweet = streams.home[index];
           var $tweet = $('<div class="tweet"></div>');
-          var newHtml = "<a href=\"" + tweet.user + ".html\">@" + tweet.user + "</a>" + ': ' + tweet.message + ', created on ' + tweet.created_at + ', ' + refreshTimestamps();
+          var newHtml = "<a href=\"" + tweet.user + ".html\">@" + tweet.user + "</a>" + ': ' + tweet.message + ', created on ' + tweet.created_at + ', ' + refreshTimestamps(now);
           $tweet.html(newHtml);
           $tweet.appendTo($content);
           index -= 1;
         }
 //This implementation prepends a new tweet to the content div periodically 
         var addNewTweet = function (){
+          this.now1 = new Date();
           var index = 0;
           var tweet = randomElement(streams.home);
           var $tweet = $('<div class="tweet"></div>');
-          var newHtml = "<a href=\"" + tweet.user + ".html\">@" + tweet.user + "</a>" + ': ' + tweet.message + ', created on ' + tweet.created_at + ', ' + refreshTimestamps();
+          var newHtml = "<a href=\"" + tweet.user + ".html\">@" + tweet.user + "</a>" + ': ' + tweet.message + ', created on ' + tweet.created_at + ', ' + refreshTimestamps(now1);
           $tweet.html(newHtml); 
           $tweet.prependTo($content);
         }
@@ -140,7 +141,8 @@
         }, 3000)
 
         setInterval(function(){
-          refreshTimestamps();
+          refreshTimestamps(now);
+          refreshTimestamps(now1);
         },1000)
 
       });
